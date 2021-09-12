@@ -11,5 +11,13 @@ module.exports = {
 
     //Para generar claves foraneas snake case: user_id en vez de userId
     underscored: true
-  }
+  },
+
+  //Configurar seeds
+  seederStorage: "sequelize",
+  seederStorageTableName: "seeds",
+
+  //Configurar migraciones
+  migrationStorage: "sequelize",
+  migrationStorageTableName: "migrations"
 }

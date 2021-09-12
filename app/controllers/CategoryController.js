@@ -64,19 +64,21 @@ function create(req, res){
     })
 }
 
-//Si intentas hacer un update y luego usar un mixin, no se puede porque el método update de sequelize no devuelve el objeto actualizado
-//solo devuelve la cantidad de filas que se cambiaron, por eso lo modificamos directamente con el id
 function update(req, res){
     Type.findByPk(req.body.type_id).then((type) => {
         if(type !== null){
             Category.update({
                 name: req.body.name,
                 description: req.body.description,
-                type_id: req.body.type_id
             }, {
                 where: {id: req.params.id}
             }).then((result)=>{
-                res.status(200).json(result)
+                Category.findByPk(req.params.id).then((category) =>{
+                    category.setType(type).then((updated) =>{
+                        res.status(200).json(updated)
+                    }).catch(err => res.status(500).json(err))
+                }).catch(err => res.status(500).json(err))
+
             }).catch( (err) =>{
                 res.status(500).json(err)
             });
