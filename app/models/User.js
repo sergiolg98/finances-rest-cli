@@ -62,8 +62,19 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function(models) {
     // associations can be defined here
-    
+    User.belongsTo(models.Role, {as: "role", foreignKey: "role_id"})
   };
   
+  //To check if User has an specific permission 
+  User.hasAccess = function(permissions, specific_permission){
+    
+    let array = []
+    permissions.forEach(p => array.push(p.name))
+    
+    //console.log('Construyo esto: ', array)
+    return array.includes(specific_permission)
+  }
+
+
   return User;
 };

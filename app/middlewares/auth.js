@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const authConfig = require('../../config/auth')
 
-const { User, Role } = require('../models/index')
+const { User, Role, Permission } = require('../models/index')
 
 module.exports = (req, res, next) =>{
 
@@ -20,14 +20,31 @@ module.exports = (req, res, next) =>{
                 
                 //Token verificado, en el decoded nos devuelve el payload decodificado y al mandar el usuario, de ahi me saco su id
                 User.findByPk(decoded.user.id, {
-                    include: {
-                        model: Role,
-                        as: "roles"
+                    include: { 
+                        model: Role, 
+                        as: "role" 
                     }
                 }).then( (user) => {
-                    //console.log(user.roles) Voy a sacar al usuario con los roles que tiene para usar en politicas
+                    
+                    //Le mando el usuario a la siguiente funcion (policy) si tiene que hacer algo
                     req.user = user
-                    next()
+                    
+                    Role.findByPk(user.role_id, {
+                        include: {
+                            model: Permission,
+                            as: "permissions",
+                            attributes: ['name']
+                        }
+                    }).then( (roles_permissions)=>{
+                        //Le mando los permisos a la policy en el req
+                        req.roles_permissions = roles_permissions.permissions
+                        next()
+
+                    }).catch( (err) =>{
+                        res.status(500).json(err)
+                    })
+                    
+                    //El metodo que sigue en next() ahora tiene acceso al req.user con toda la información del user y sus permisos incluido
                 })
             }
         })
