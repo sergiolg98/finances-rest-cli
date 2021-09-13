@@ -28,7 +28,8 @@ module.exports = (req, res, next) =>{
                     
                     //Le mando el usuario a la siguiente funcion (policy) si tiene que hacer algo
                     req.user = user
-                    
+                    //console.log('Esto de usuarito tengo: ', req.user.id)
+
                     Role.findByPk(user.role_id, {
                         include: {
                             model: Permission,

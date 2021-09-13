@@ -13,6 +13,8 @@ function create(req, res, next){
 
 // Adicionalmente para politicas de lectura, se debe considerar que solo puede leer los expenses de el mismo 
 // Si fuera el admin, puede ver absolutamente todos (y como se mostraria en frontend... para pensar) - esta aun no
+
+
 function read(req, res, next){
     if(User.hasAccess(req.roles_permissions, "read_expense")){
         next()

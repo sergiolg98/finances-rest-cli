@@ -16,6 +16,7 @@ app.use('/api/category', require('./routes/category.router'))
 app.use('/api/role', require('./routes/role.router'))
 app.use('/api/year', require('./routes/year.router'))
 app.use('/api/month', require('./routes/month.router'))
+app.use('/api/card', require('./routes/card.router'))
 
 
 module.exports = app

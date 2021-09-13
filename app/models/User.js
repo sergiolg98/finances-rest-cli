@@ -68,10 +68,8 @@ module.exports = (sequelize, DataTypes) => {
   
   //To check if User has an specific permission 
   User.hasAccess = function(permissions, specific_permission){
-    
     let array = []
     permissions.forEach(p => array.push(p.name))
-    
     //console.log('Construyo esto: ', array)
     return array.includes(specific_permission)
   }
