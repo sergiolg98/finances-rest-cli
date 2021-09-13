@@ -2,15 +2,16 @@
 module.exports = (sequelize, DataTypes) => {
 
   const Role = sequelize.define('Role', {
-    role: DataTypes.STRING,
-    color: DataTypes.STRING
+    name: DataTypes.STRING,
+    color: DataTypes.STRING,
+    description: DataTypes.STRING
   }, {
     tableName: "roles"
   });
-
+  
   Role.associate = function(models) {
     // associations can be defined here
-    Role.belongsToMany(models.User, {as: "users", through: "user_role", foreignKey: "role_id"})
+    Role.belongsToMany(models.Permission, {as: "permissions", through: "roles_permissions", foreignKey: "role_id"})
 
   };
   return Role;
