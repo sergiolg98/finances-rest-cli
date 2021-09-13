@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   Month.associate = function(models) {
     // associations can be defined here
     Month.belongsTo(models.Year, {as: "year", foreignKey: "year_id"})
+    Month.hasMany(models.Expense, {as: "expenses"})
   };
   
   return Month;

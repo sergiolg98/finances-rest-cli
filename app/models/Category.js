@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
   Category.associate = function(models) {
     
     Category.belongsTo(models.Type, {as: "type"})
+    Category.hasMany(models.Expense, {as: "expenses"})
   };
   return Category;
 };

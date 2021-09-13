@@ -63,6 +63,7 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
     // associations can be defined here
     User.belongsTo(models.Role, {as: "role", foreignKey: "role_id"})
+    User.hasMany(models.Card, {as: "cards"})
   };
   
   //To check if User has an specific permission 
