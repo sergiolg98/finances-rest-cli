@@ -11,10 +11,14 @@ function create(req, res, next){
 }
 
 
-// Adicionalmente para politicas de lectura, se debe considerar que solo puede leer los expenses de el mismo 
-// Si fuera el admin, puede ver absolutamente todos (y como se mostraria en frontend... para pensar) - esta aun no
+function read_one(req, res, next){
+    if(User.hasAccess(req.roles_permissions, "read_expense") && (req.user.id === req.card.user_id) ){
+        next()
+    }
+    else { res.status(401).json({msg: "Unauthorized access for this action."}) }
+}
 
-
+//Aun sin uso
 function read(req, res, next){
     if(User.hasAccess(req.roles_permissions, "read_expense")){
         next()
@@ -23,14 +27,14 @@ function read(req, res, next){
 }
 
 function update(req, res, next){
-    if(User.hasAccess(req.roles_permissions, "update_expense")){
+    if(User.hasAccess(req.roles_permissions, "update_expense") && (req.user.id === req.card.user_id)){
         next()
     }
     else { res.status(401).json({msg: "Unauthorized access for this action."}) }
 }
 
 function deleteInstance(req, res, next){
-    if(User.hasAccess(req.roles_permissions, "delete_expense")){
+    if(User.hasAccess(req.roles_permissions, "delete_expense") && (req.user.id === req.card.user_id)){
         next()
     }
     else { res.status(401).json({msg: "Unauthorized access for this action."}) }
@@ -40,6 +44,7 @@ function deleteInstance(req, res, next){
 module.exports = {
     create,
     read,
+    read_one,
     update,
     deleteInstance
 }

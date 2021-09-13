@@ -69,12 +69,12 @@ function getAllWithExpenses(req, res){
 
 function create(req, res){
     Card.create({
-        bank: req.body.bank,
+        card: req.body.card,
         currency: req.body.currency,
         currency_symbol: req.body.currency_symbol,
         processor: req.body.processor
     }).then( (card) => {
-        card.setUser(req.user.id).then((created) => {
+        card.setUser(req.user).then((created) => {
             res.status(200).json(created)
         }).catch( (err) =>{ res.status(500).json(err) })
 
@@ -86,7 +86,7 @@ function create(req, res){
 //No se puede actualizar de dueño obviamente
 function update(req, res){
     Card.update({
-        bank: req.body.bank,
+        card: req.body.card,
         currency: req.body.currency,
         currency_symbol: req.body.currency_symbol,
         processor: req.body.processor
