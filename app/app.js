@@ -3,11 +3,15 @@
 const express = require('express')
 const app = express()
 
+const cors = require('cors')
+
 //Middleware
 //Para poder llenar el req.body
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
+//CORS Policies
+app.use(cors())
 
 //Routes
 app.use('/api', require('./routes/auth.router'))
