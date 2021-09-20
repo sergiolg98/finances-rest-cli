@@ -80,7 +80,7 @@ function deleteInstance(req, res){
         where: {year_id: req.params.id}
     }).then((result) => {
         if(parseInt(result.count) > 0){
-            res.status(406).json({
+            res.status(409).json({
                 msg: `${result.count} Months belongs to this Year. Can't be destroyed.`
             })
         }

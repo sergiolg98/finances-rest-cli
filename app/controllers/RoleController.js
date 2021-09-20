@@ -78,7 +78,7 @@ function deleteInstance(req, res){
         where: {role_id: req.params.id}
     }).then((result) => {
         if(parseInt(result.count) > 0){
-            res.status(406).json({
+            res.status(409).json({
                 msg: `${result.count} Users using this Role. Can't be destroyed.`
             })
         }

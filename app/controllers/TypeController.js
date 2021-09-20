@@ -76,7 +76,7 @@ function deleteInstance(req, res){
         where: {type_id: req.params.id}
     }).then((result) => {
         if(parseInt(result.count) > 0){
-            res.status(406).json({
+            res.status(409).json({
                 msg: `${result.count} DB categories using this Type. Can't be destroyed.`
             })
         }
