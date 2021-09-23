@@ -22,10 +22,6 @@ module.exports = (sequelize, DataTypes) => {
         notNull: {
             msg: "El campo no puede estar vacío."
         },
-        is: {
-            args: ["^[a-zA-Z ]*$",'i'],
-            msg: "Solo debe contener letras y espacios."
-        },
       }
     },
     color: DataTypes.STRING
