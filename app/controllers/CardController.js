@@ -1,7 +1,7 @@
 'use strict'
 
 /** Card Controller */
-const {Card, Expense} = require('../models/index')
+const {Card, Expense, Category, Type} = require('../models/index')
 
 
 function getAll(req, res){
@@ -40,7 +40,16 @@ function getOne(req, res){
 function getExpensesLinked(req, res){
 
     req.card.getExpenses({
-        attributes: ['name', 'description', 'date']
+        include: {
+            model: Category,
+            as: 'category',
+            attributes: ['name'],
+            include: {
+                model: Type,
+                as: 'type',
+                attributes: ['name', 'id'],
+            }
+        }
     }).then((result) => {
         res.status(200).json(result)
     }).catch((err)=>{
@@ -72,7 +81,10 @@ function create(req, res){
         card: req.body.card,
         currency: req.body.currency,
         currency_symbol: req.body.currency_symbol,
-        processor: req.body.processor
+        processor: req.body.processor,
+        bank: req.body.bank,
+        bank_account: req.body.bank_account,
+        bank_inter_account: req.body.bank_inter_account
     }).then( (card) => {
         card.setUser(req.user).then((created) => {
             res.status(200).json(created)
@@ -89,7 +101,10 @@ function update(req, res){
         card: req.body.card,
         currency: req.body.currency,
         currency_symbol: req.body.currency_symbol,
-        processor: req.body.processor
+        processor: req.body.processor,
+        bank: req.body.bank,
+        bank_account: req.body.bank_account,
+        bank_inter_account: req.body.bank_inter_account
     }, {
         where: {id: req.params.id}
     }).then((result)=>{

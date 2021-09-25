@@ -27,6 +27,18 @@ module.exports = (sequelize, DataTypes) => {
         },
       }
     },
+    bank: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    bank_account: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    bank_inter_account: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   }, {
     tableName: "cards"
   });
