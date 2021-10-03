@@ -6,10 +6,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          is: {
-              args: ["^[a-zA-Z ]*$",'i'],
-              msg: "Solo debe contener letras y espacios."
-          },
           notNull: {
               msg: "El campo no puede ser nulo."
           }
@@ -19,17 +15,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          is: {
-              args: ["^[a-zA-Z ]*$",'i'],
-              msg: "Solo debe contener letras y espacios."
-          },
           notNull: {
               msg: "El campo no puede ser nulo."
           }
         }
     },
     date: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
       validate: {
         isDate: {
